@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>风车</title>
+	<style>
+	#show{width:1280px;height:848px;margin:0 auto;position: absolute;top:0;top:0;}
+	#hidden{width:1280px;height:848px;margin:0 auto;position: absolute;top:0;}
+	.show{overflow:hidden;position:relative;z-index:20;width:50%;height:50%;float:left;}
+    .hidden{overflow:hidden;position:relative;z-index:10;width:50%;height:50%;float:left;}
+    img{width:200%;height:200%;position:absolute;}
+   #span{display:block;position:fixed;width:80px;height:80px;background:#000;right:100px;z-index:100;top:250px;opacity: 0.5;color: #fff;font:40px/80px "";text-align: center;border-radius: 10px;}
+   #left{display:block;position:fixed;width:80px;height:80px;background:#000;left:100px;z-index:100;top:250px;opacity: 0.5;color: #fff;font:40px/80px "";text-align: center;border-radius: 10px;}
+	</style>
+</head>
+<script>
+			    function createShow(d) {
+                var _show = document.getElementById("show");       
+                for (var i = 0; i < _show.children.length; i++) {
+                    _show.children[i].innerHTML = "";
+                    _show.children[i].style.width = "50%";
+                    _show.children[i].style.height = "50%";
+                    _show.children[i].style.float = "left";
+                    var oImg = document.createElement("img");
+                    _show.children[i].appendChild(oImg);
+                  oImg.src = "images/"+d+".jpg";
+                }
+                var oimg=_show.getElementsByTagName("img");
+                console.log(oimg);
+	                oimg[1].style.left = "-100%";
+	                oimg[2].style.top = "-100%";
+	                oimg[3].style.left = "-100%";
+	                oimg[3].style.top = "-100%";
+            }
+            function createHidden(d) {
+                var _hidden=document.getElementById("hidden");
+                for (var i = 0; i < _hidden.children.length; i++) {
+                    _hidden.children[i].innerHTML = "";
+                    _hidden.children[i].style.width = "50%";
+                    _hidden.children[i].style.height = "50%";
+                    _hidden.children[i].style.float = "left";
+                    var oImg = document.createElement("img");
+                    _hidden.children[i].appendChild(oImg);
+                    oImg.src="images/"+d+".jpg";                 
+                }
+                var oimg = _hidden.getElementsByTagName("img");
+	                console.log(oimg);
+	                oimg[1].style.left = "-100%";
+	                oimg[2].style.top = "-100%";
+	                oimg[3].style.left = "-100%";
+	                oimg[3].style.top = "-100%";
+            }	
+			var k = 1;
+			function move() {
+                var _show = document.getElementById("show");
+                var simg = _show.getElementsByTagName("img");
+                var _hidden = document.getElementById("hidden");
+                var himg = _hidden.getElementsByTagName("img");
+                var _span = document.getElementById("span");
+                var _left=document.getElementById("left");
+                var _timer = 0;
+                var j = 0;
+                _span.onclick = function() {
+                    function start() {
+                        window.clearTimeout(_timer);
+                        j+=5;
+                        simg[0].style.top=j + "%";
+                        simg[1].style.left=-(100+j)+"%";
+                        simg[2].style.left=j+"%";
+                        simg[3].style.top=-(100+j)+"%";
+                        himg[0].style.height=(100 + j)+"%";
+                        himg[0].style.width=(100 + j)+"%";
+                        himg[1].style.height=(100 + j) +"%";
+                        himg[1].style.width=(300 - j)+"%";
+                        himg[2].style.height=(300 - j)+"%";
+                        himg[2].style.width=(100 + j)+"%";
+                        himg[3].style.height=(300 - j)+"%";
+                        himg[3].style.width=(300 - j)+"%";
+                        if (j >= 100) {
+                            k++;
+                           createShow(k);
+                            if (k==4){
+                                k=1
+                            }
+                            createHidden(k+1);
+                            move();
+                            return;
+                        }
+                        _timer=setTimeout(start, 30)
+                    }
+                    start();
+                }
+                _left.onclick = function() {
+                    function exec() {
+                        window.clearTimeout(_timer);
+                        j+=5;
+                        simg[0].style.top=j + "%";
+                        simg[1].style.left=(100+j)+"%";
+                        simg[2].style.left=j+"%";
+                        simg[3].style.top=(100+j)+"%";
+                        himg[0].style.height=(100 + j)+"%";
+                        himg[0].style.width=(100 + j)+"%";
+                        himg[1].style.height=(100 + j) +"%";
+                        himg[1].style.width=(300 - j)+"%";
+                        himg[2].style.height=(300 - j)+"%";
+                        himg[2].style.width=(100 + j)+"%";
+                        himg[3].style.height=(300 - j)+"%";
+                        himg[3].style.width=(300 - j)+"%";
+                        if (j >= 100) {
+                            k++;
+                           createShow(k);
+                            if (k==4){
+                                k=1
+                            }
+                            createHidden(k+1);
+                            move();
+                            return;
+                        }
+                        _timer=setTimeout(exec, 30)
+                    }
+                    exec();
+                }
+			}
+ 			window.onload = function() {
+                createShow(1);
+                createHidden(2);
+                move();
+            }
+</script>
+<body>
+	<div id="show">
+		<div class="show" id="show1"></div>
+		<div class="show" id="show2"></div>
+		<div class="show" id="show3"></div>
+		<div class="show" id="show4"></div>
+	</div>
+	<div id="hidden">
+		<div class="hidden" id="hidden1"></div>
+		<div class="hidden" id="hidden2"></div>
+		<div class="hidden" id="hidden3"></div>
+		<div class="hidden" id="hidden4"></div>
+	</div>
+	<span id="span">&gt;</span>
+    <span id="left">&lt;</span>
+</body>
+</html>
